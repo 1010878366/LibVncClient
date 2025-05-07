@@ -11,9 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget *centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
-    ipLineEdit = new QLineEdit("192.168.7.11", this);
+    ipLineEdit = new QLineEdit("192.168.7.12", this);
     portLineEdit = new QLineEdit("5900", this);
     connectButton = new QPushButton("Connect", this);
+    connectButton->setDefault(true);  // 设置为默认按钮（按回车触发）
 
     QHBoxLayout *inputLayout = new QHBoxLayout;
     inputLayout->addWidget(new QLabel("IP:", this));
@@ -28,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
 
-    setWindowTitle("LibVncClient V1.0.1");
+    setWindowTitle("LibVncClient V1.0.2");
 }
 
 MainWindow::~MainWindow()

@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(viewer);
 
     connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
+
+    setWindowTitle("LibVncClient V1.0.1");
 }
 
 MainWindow::~MainWindow()

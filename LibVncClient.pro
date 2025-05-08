@@ -28,17 +28,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
+    mainpreview.cpp \
     mainwindow.cpp \
     vncviewer.cpp
 
 HEADERS += \
+    mainpreview.h \
     mainwindow.h \
     vncviewer.h
 
 FORMS += \
+    mainpreview.ui \
     mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES +=

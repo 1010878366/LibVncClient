@@ -6,47 +6,46 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
-      viewer(new VncViewer(this))
-{
-    QWidget *centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
+      viewer(new VncViewer(this)),
+      ui(new Ui::MainWindow)
+{ 
+    ui->setupUi(this);
 
-    ipLineEdit = new QLineEdit("192.168.7.12", this);
-    portLineEdit = new QLineEdit("5900", this);
-    connectButton = new QPushButton("Connect", this);
-    connectButton->setDefault(true);  // 设置为默认按钮（按回车触发）
+    viewer = new VncViewer(this);
 
-    QHBoxLayout *inputLayout = new QHBoxLayout;
-    inputLayout->addWidget(new QLabel("IP:", this));
-    inputLayout->addWidget(ipLineEdit);
-    inputLayout->addWidget(new QLabel("Port:", this));
-    inputLayout->addWidget(portLineEdit);
-    inputLayout->addWidget(connectButton);
+    QVBoxLayout *layout = new QVBoxLayout(ui->widget_view);
+    layout->addWidget(viewer);
+    layout->setContentsMargins(0, 0, 0, 0);  // 去除边距
+    viewer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->widget_view->setLayout(layout);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-    mainLayout->addLayout(inputLayout);
-    mainLayout->addWidget(viewer);
+    connect(ui->btn_connect, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
 
-    connect(connectButton, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
-
-    setWindowTitle("LibVncClient V1.0.2");
+    setWindowTitle("LibVncClient V1.0.3 - UI");
 }
 
 MainWindow::~MainWindow()
 {
-    // VncViewer 在父对象析构时自动释放
+    delete ui;
 }
 
 void MainWindow::onConnectButtonClicked()
 {
-    QString ip = ipLineEdit->text();
-    int port = portLineEdit->text().toInt();
+    QString ip = ui->ipLineEdit->text();
+    int port = ui->portLineEdit->text().toInt();
 
-    if (ip.isEmpty() || port <= 0) {
+    if (ip.isEmpty() || port <= 0)
+    {
         QMessageBox::warning(this, "Input Error", "Please enter a valid IP and port.");
         return;
     }
 
     viewer->setServerInfo(ip.toStdString(), port);
     viewer->start();
+}
+
+void MainWindow::on_brn_MainPreview_clicked()
+{
+    MainPreview *preview = new MainPreview(this);
+    preview->show();
 }

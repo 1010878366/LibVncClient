@@ -9,6 +9,10 @@ VncViewer::VncViewer(QWidget *parent)
 {
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);  //开启鼠标移动追踪
+
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setMinimumSize(1, 1);  // 防止最小尺寸限制
+
 }
 
 VncViewer::~VncViewer()
@@ -106,9 +110,26 @@ void VncViewer::finishedFramebufferUpdate(rfbClient *cl)
 
 void VncViewer::paintEvent(QPaintEvent *event)
 {
+//    Q_UNUSED(event);
+//    QPainter painter(this);
+//    painter.drawImage(rect(), m_image);
+
+
+
     Q_UNUSED(event);
     QPainter painter(this);
-    painter.drawImage(rect(), m_image);
+
+    if (!m_image.isNull()) {
+        // 将图像缩放到 widget 的大小，用 IgnoreAspectRatio 拉伸填满
+        //QImage scaledImage = m_image.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation); //保持比例
+        QImage scaledImage = m_image.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+        // 将图像居中绘制
+        int x = (width() - scaledImage.width()) / 2;
+        int y = (height() - scaledImage.height()) / 2;
+
+        painter.drawImage(x, y, scaledImage);
+    }
 }
 
 void VncViewer::mouseMoveEvent(QMouseEvent *event)
@@ -162,8 +183,10 @@ void VncViewer::wheelEvent(QWheelEvent *event)
     else if (event->angleDelta().y() < 0)
         buttonMask = 16; // 滚轮下滚
 
-    int x = event->position().x() / width() * cl->width;
-    int y = event->position().y() / height() * cl->height;
+    //int x = event->position().x() / width() * cl->width;
+    //int y = event->position().y() / height() * cl->height;
+    int x = event->pos().x() / width() * cl->width;
+    int y = event->pos().y() / height() * cl->height;
 
     // 发送滚轮按下
     SendPointerEvent(cl, x, y, buttonMask);

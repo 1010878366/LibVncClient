@@ -25,12 +25,22 @@ private slots:
     void onDisConnectButtonClicked();
     void on_brn_MainPreview_clicked();
 
+    void on_tableWidget_IP_cellDoubleClicked(int row, int column);
+
+    void on_btn_add_ip_clicked();
+
+    void on_btn_remove_ip_clicked();
+
+    void on_btn_rename_ip_clicked();
+
 private:
     Ui::MainWindow *ui;
     QLineEdit *ipLineEdit;
     QLineEdit *portLineEdit;
     QPushButton *connectButton;
     VncViewer *viewer;
+
+    int m_nCurrentConnectionRow = -1; // 当前连接的行索引，-1表示未连接
 };
 
 #endif // MAINWINDOW_H

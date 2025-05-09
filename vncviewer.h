@@ -7,7 +7,7 @@
 #include <QImage>
 #include "rfb/rfbclient.h"
 #include "rfb/keysym.h"
-#include "QMessageBox"
+#include <QMessageBox>
 
 extern "C" {
 #include <rfb/keysym.h>
@@ -47,7 +47,6 @@ private:
     static void finishedFramebufferUpdateStatic(rfbClient *cl);     //接收到 VNC 服务器的画面
     void finishedFramebufferUpdate(rfbClient *cl);      //处理接收到的画面数据并将其存储到 m_image 中，然后触发界面更新。
     int qtKeyToRfbKey(int qtKey);               //将 Qt 的键盘事件映射为 VNC 协议所使用的键盘事件代码。这是键盘事件处理的辅助函数。
-
 };
 
 #endif // VNCVIEWER_H

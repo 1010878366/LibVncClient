@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btn_connect, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
     connect(ui->btn_disconnect,&QPushButton::clicked,this,&MainWindow::onDisConnectButtonClicked);
 
-    setWindowTitle("LibVncClient V1.0.4.1 - UI");
+    setWindowTitle("LibVncClient V1.0.4.2");
 }
 
 MainWindow::~MainWindow()

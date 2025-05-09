@@ -1,4 +1,5 @@
-﻿#include "vncviewer.h"
+﻿
+#include "vncviewer.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <QCloseEvent>

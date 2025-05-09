@@ -32,6 +32,8 @@ private slots:
     void on_btn_remove_ip_clicked();
 
     void on_btn_rename_ip_clicked();
+    void switchToOneScreen();
+    void switchToFourScreens();
 
 private:
     Ui::MainWindow *ui;

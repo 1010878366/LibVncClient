@@ -260,7 +260,7 @@
   <customwidget>
    <class>VncDisplayWidget</class>
    <extends>QWidget</extends>
-   <header location="global">vncdisplaywidget.h</header>
+   <header>vncdisplaywidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

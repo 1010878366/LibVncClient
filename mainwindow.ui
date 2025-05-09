@@ -31,6 +31,48 @@
           <height>320</height>
          </size>
         </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QWidget" name="label_screen1" native="true">
+           <property name="styleSheet">
+            <string notr="true">background-color: black;
+color: white;
+border: 1px solid gray;
+</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QWidget" name="label_screen2" native="true">
+           <property name="styleSheet">
+            <string notr="true">background-color: black;
+color: white;
+border: 1px solid gray;
+</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QWidget" name="label_screen3" native="true">
+           <property name="styleSheet">
+            <string notr="true">background-color: black;
+color: white;
+border: 1px solid gray;
+</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QWidget" name="label_screen4" native="true">
+           <property name="styleSheet">
+            <string notr="true">background-color: black;
+color: white;
+border: 1px solid gray;
+</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -157,6 +199,13 @@
          </item>
         </widget>
        </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="btn_1screen">
+         <property name="text">
+          <string>1画面</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
@@ -215,6 +264,13 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="btn_4screen">
+         <property name="text">
+          <string>4画面</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

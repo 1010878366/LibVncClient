@@ -13,14 +13,34 @@ MainWindow::MainWindow(QWidget *parent)
 
     viewer = new VncViewer(this);
 
-    QVBoxLayout *layout = new QVBoxLayout(ui->widget_view);
+    /*
+    //QVBoxLayout *layout = new QVBoxLayout(ui->widget_view);
+    QVBoxLayout *layout = new QVBoxLayout(ui->label_screen1);
     layout->addWidget(viewer);
     layout->setContentsMargins(0, 0, 0, 0);  // 去除边距
     viewer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->widget_view->setLayout(layout);
+    */
+
+
+    ui->label_screen1->hide();
+
+    QLayout *layout = ui->label_screen1->parentWidget()->layout();
+    if (layout) {
+        layout->replaceWidget(ui->label_screen1, viewer);
+    }
+
+    viewer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    viewer->show();
+
+
 
     connect(ui->btn_connect, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
     connect(ui->btn_disconnect,&QPushButton::clicked,this,&MainWindow::onDisConnectButtonClicked);
+
+    connect(ui->btn_1screen, &QPushButton::clicked, this, &MainWindow::switchToOneScreen);
+    connect(ui->btn_4screen, &QPushButton::clicked, this, &MainWindow::switchToFourScreens);
+
 
     setWindowTitle("LibVncClient V1.0.4.2");
 }
@@ -131,3 +151,22 @@ void MainWindow::on_btn_rename_ip_clicked()
     ui->tableWidget_IP->editItem(ui->tableWidget_IP->item(row, 0)); // IP
     ui->tableWidget_IP->editItem(ui->tableWidget_IP->item(row, 1)); // 名称
 }
+
+void MainWindow::switchToOneScreen()
+{
+    ui->label_screen1->show();
+    ui->label_screen2->hide();
+    ui->label_screen3->hide();
+    ui->label_screen4->hide();
+}
+
+void MainWindow::switchToFourScreens()
+{
+    ui->label_screen1->show();
+    ui->label_screen2->show();
+    ui->label_screen3->show();
+    ui->label_screen4->show();
+}
+
+
+

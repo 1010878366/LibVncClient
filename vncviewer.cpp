@@ -351,6 +351,13 @@ int VncViewer::qtKeyToRfbKey(int qtKey)
 
 void VncViewer::closeEvent(QCloseEvent *event)
 {
+    disconnectFormServer();
+    event->accept();
+    QWidget::closeEvent(event);
+}
+
+void VncViewer::disconnectFormServer()
+{
     m_startFlag = false;
 
     if (m_vncThread && m_vncThread->joinable())
@@ -365,6 +372,11 @@ void VncViewer::closeEvent(QCloseEvent *event)
         rfbClientCleanup(cl);
         cl = nullptr;
     }
+    clearDisplay();
+}
 
-    QWidget::closeEvent(event);
+void VncViewer::clearDisplay()
+{
+    m_image = QImage(); // 清空图像
+    update(); // 触发重绘
 }

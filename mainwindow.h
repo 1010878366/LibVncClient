@@ -6,7 +6,7 @@
 #include <QPushButton>
 #include "vncviewer.h"
 #include "ui_mainwindow.h"
-#include "mainpreview.h"
+#include "mainframe.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,11 +22,7 @@ public:
 
 private slots:
     void onConnectButtonClicked();
-
-    void on_pushButton_clicked();
-
-    void on_btn_connect_clicked();
-
+    void onDisConnectButtonClicked();
     void on_brn_MainPreview_clicked();
 
 private:

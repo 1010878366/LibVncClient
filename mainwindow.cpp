@@ -20,8 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->widget_view->setLayout(layout);
 
     connect(ui->btn_connect, &QPushButton::clicked, this, &MainWindow::onConnectButtonClicked);
+    connect(ui->btn_disconnect,&QPushButton::clicked,this,&MainWindow::onDisConnectButtonClicked);
 
-    setWindowTitle("LibVncClient V1.0.3 - UI");
+    setWindowTitle("LibVncClient V1.0.4 - UI");
 }
 
 MainWindow::~MainWindow()
@@ -44,8 +45,14 @@ void MainWindow::onConnectButtonClicked()
     viewer->start();
 }
 
+void MainWindow::onDisConnectButtonClicked()
+{
+    viewer->disconnectFormServer();
+}
+
 void MainWindow::on_brn_MainPreview_clicked()
 {
-    MainPreview *preview = new MainPreview(this);
-    preview->show();
+    MainFrame *frame = new MainFrame(this);
+    frame->show();
 }
+

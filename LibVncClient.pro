@@ -28,17 +28,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainpreview.cpp \
+    mainframe.cpp \
     mainwindow.cpp \
+    vncdisplaywidget.cpp \
     vncviewer.cpp
 
 HEADERS += \
-    mainpreview.h \
+    mainframe.h \
     mainwindow.h \
+    vncdisplaywidget.h \
     vncviewer.h
 
 FORMS += \
-    mainpreview.ui \
+    mainframe.ui \
     mainwindow.ui
 
 # Default rules for deployment.

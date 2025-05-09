@@ -22,6 +22,8 @@ public:
 
     void setServerInfo(const std::string &ip, int port);
     void start();
+    void disconnectFormServer();
+    void clearDisplay();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

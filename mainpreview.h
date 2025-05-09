@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include"vncviewer.h"
-#include<QListWidgetItem>
+
 
 namespace Ui {
 class MainPreview;
@@ -18,20 +18,14 @@ public:
     ~MainPreview();
 
 
-    void onIpItemDoubleClicked(QListWidgetItem *item);
 
 private slots:
-    void on_btn_connect_clicked();
 
-
-    void on_btn_disconnect_clicked();
-
-    void on_btn_exe_clicked();
 
 private:
     Ui::MainPreview *ui;
 
-    VncViewer *viewer;
+
 };
 
 #endif // MAINPREVIEW_H

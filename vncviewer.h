@@ -31,6 +31,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;       //鼠标移动
     void mousePressEvent(QMouseEvent *event) override;      //鼠标按下
     void mouseReleaseEvent(QMouseEvent *event) override;    //鼠标松开
+    void mouseDoubleClickEvent(QMouseEvent *event) override;//双击鼠标左键切换全屏
     void wheelEvent(QWheelEvent *event) override;           //滚轮移动
     void keyPressEvent(QKeyEvent *event) override;          //键盘按下
     void keyReleaseEvent(QKeyEvent *event) override;        //键盘松开
@@ -38,6 +39,8 @@ protected:
 
 private:
     bool m_startFlag = false;   //是否连接成功
+    bool m_isMouseClicked;  // 是否鼠标点击
+    bool m_isFullScreen;    // 是否全屏
     QImage m_image;             //存储从 VNC 服务器接收到的画面数据
     rfbClient *cl = nullptr;    //指向 rfbClient 的指针，rfbClient 是 VNC 协议的客户端数据结构，负责与 VNC 服务器进行通信和数据交互
     std::thread *m_vncThread = nullptr;
@@ -48,6 +51,13 @@ private:
     static void finishedFramebufferUpdateStatic(rfbClient *cl);     //接收到 VNC 服务器的画面
     void finishedFramebufferUpdate(rfbClient *cl);      //处理接收到的画面数据并将其存储到 m_image 中，然后触发界面更新。
     int qtKeyToRfbKey(int qtKey);               //将 Qt 的键盘事件映射为 VNC 协议所使用的键盘事件代码。这是键盘事件处理的辅助函数。
+    void toggleFullScreen();  // 切换全屏模式
+//    void SendPointerEvent(/* 参数 */);  // 发送指针事件
+//    void SendFramebufferUpdateRequest(/* 参数 */);  // 请求画面更新
+
+
+signals:
+    void connectionFailed(const QString &msg);
 };
 
 #endif // VNCVIEWER_H

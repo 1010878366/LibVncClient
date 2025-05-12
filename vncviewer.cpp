@@ -14,6 +14,11 @@ VncViewer::VncViewer(QWidget *parent)
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setMinimumSize(1, 1);  // 防止最小尺寸限制
 
+//    connect(vncViewer, &VncViewer::connectionFailed, this, [](const QString &msg)
+//    {
+//        QMessageBox::critical(nullptr, "错误", msg);
+//    });
+
 }
 
 VncViewer::~VncViewer()
@@ -25,6 +30,7 @@ VncViewer::~VncViewer()
     }
     if (cl) {
         rfbClientCleanup(cl);
+        cl = nullptr;
     }
 }
 
@@ -79,14 +85,16 @@ void VncViewer::start()
             if (i < 0)
             {
                 //std::cout << "[INFO] disconnected" << std::endl;
-                QMessageBox::critical(this,"失败","[INFO] 连接失败！");
+                QMessageBox::warning(this,"警告","连接失败！");
+                //emit connectionFailed("连接失败");
                 rfbClientCleanup(cl);
                 break;
             }
             if (i && !HandleRFBServerMessage(cl))
             {
                 //std::cout << "[INFO] disconnected" << std::endl;
-                QMessageBox::critical(this,"失败","[INFO] 连接失败！");
+                //emit connectionFailed("连接失败");
+                QMessageBox::warning(this,"警告","连接失败！");
                 rfbClientCleanup(cl);
                 break;
             }
@@ -111,12 +119,6 @@ void VncViewer::finishedFramebufferUpdate(rfbClient *cl)
 
 void VncViewer::paintEvent(QPaintEvent *event)
 {
-//    Q_UNUSED(event);
-//    QPainter painter(this);
-//    painter.drawImage(rect(), m_image);
-
-
-
     Q_UNUSED(event);
     QPainter painter(this);
 
@@ -135,7 +137,14 @@ void VncViewer::paintEvent(QPaintEvent *event)
 
 void VncViewer::mouseMoveEvent(QMouseEvent *event)
 {
-    if (m_startFlag) {
+    if (m_startFlag || m_isMouseClicked)
+    {
+        int widgetWidth = width();
+        int widgetHeight = height();
+
+        if (widgetWidth == 0 || widgetHeight == 0)
+            return;
+
         int x = event->localPos().x() / width() * cl->width;
         int y = event->localPos().y() / height() * cl->height;
         int buttons = (event->buttons() & Qt::LeftButton) ? 1 : 0;
@@ -147,7 +156,13 @@ void VncViewer::mouseMoveEvent(QMouseEvent *event)
 
 void VncViewer::mousePressEvent(QMouseEvent *event)
 {
-    if (m_startFlag) {
+    if (event->button() == Qt::LeftButton)
+    {
+        m_isMouseClicked = true;  // 鼠标左键点击后开始远程交互
+    }
+
+    if (m_startFlag)
+    {
         int buttonMask = 0;
         if (event->button() == Qt::LeftButton)
             buttonMask = 1;        // Bit 0 左键
@@ -165,11 +180,19 @@ void VncViewer::mousePressEvent(QMouseEvent *event)
 
 void VncViewer::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (m_startFlag) {
+    if (m_startFlag)
+    {
         SendPointerEvent(cl,
                          event->localPos().x() / width() * cl->width,
                          event->localPos().y() / height() * cl->height,
                          0);
+    }
+}
+
+void VncViewer::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        toggleFullScreen();  // 双击左键切换全屏
     }
 }
 
@@ -209,8 +232,23 @@ void VncViewer::keyPressEvent(QKeyEvent *event)
     int rfbKey = qtKeyToRfbKey(qtKey);
     if (rfbKey != 0)
         SendKeyEvent(cl, rfbKey, true);
+
+    if (event->key() == Qt::Key_Escape && m_isFullScreen)
+    {
+        toggleFullScreen();  // 按 Esc 退出全屏
+    }
 }
 
+void VncViewer::toggleFullScreen()
+{
+    if (m_isFullScreen) {
+        showNormal();  // 退出全屏
+        m_isFullScreen = false;
+    } else {
+        showFullScreen();  // 进入全屏
+        m_isFullScreen = true;
+    }
+}
 
 void VncViewer::keyReleaseEvent(QKeyEvent *event)
 {

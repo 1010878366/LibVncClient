@@ -30,18 +30,21 @@ SOURCES += \
     main.cpp \
     mainframe.cpp \
     mainwindow.cpp \
+    newfrom.cpp \
     vncdisplaywidget.cpp \
     vncviewer.cpp
 
 HEADERS += \
     mainframe.h \
     mainwindow.h \
+    newfrom.h \
     vncdisplaywidget.h \
     vncviewer.h
 
 FORMS += \
     mainframe.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    newfrom.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

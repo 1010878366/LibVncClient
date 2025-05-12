@@ -172,6 +172,11 @@ border: 1px solid gray;
            <string>3</string>
           </property>
          </row>
+         <row>
+          <property name="text">
+           <string>4</string>
+          </property>
+         </row>
          <column>
           <property name="text">
            <string>IP</string>
@@ -189,21 +194,33 @@ border: 1px solid gray;
          </item>
          <item row="1" column="0">
           <property name="text">
-           <string>192.168.7.12</string>
+           <string>192.168.1.65</string>
           </property>
          </item>
          <item row="2" column="0">
           <property name="text">
-           <string>192.168.1.5</string>
+           <string>192.168.1.65</string>
+          </property>
+         </item>
+         <item row="3" column="0">
+          <property name="text">
+           <string>192.168.1.65</string>
           </property>
          </item>
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QPushButton" name="btn_1screen">
-         <property name="text">
-          <string>1画面</string>
-         </property>
+        <widget class="QComboBox" name="comboBox_screenSwitch">
+         <item>
+          <property name="text">
+           <string>1 画面</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>4 画面</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="1" column="0">
@@ -223,7 +240,7 @@ border: 1px solid gray;
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer">
+          <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -236,18 +253,17 @@ border: 1px solid gray;
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>port</string>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="LineEdit_Port">
-           <property name="text">
-            <string>5900</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
            </property>
-          </widget>
+          </spacer>
          </item>
          <item>
           <widget class="QPushButton" name="btn_connect">
@@ -264,13 +280,6 @@ border: 1px solid gray;
           </widget>
          </item>
         </layout>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="btn_4screen">
-         <property name="text">
-          <string>4画面</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>

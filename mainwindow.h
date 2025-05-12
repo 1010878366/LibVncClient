@@ -7,6 +7,7 @@
 #include "vncviewer.h"
 #include "ui_mainwindow.h"
 #include "mainframe.h"
+#include <QVector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -34,15 +35,17 @@ private slots:
     void on_btn_rename_ip_clicked();
     void switchToOneScreen();
     void switchToFourScreens();
+    void onScreenSwitchChanged(int index);
+    void bindViewersToLabels();
+    bool eventFilter(QObject *watched, QEvent *event);
 
 private:
     Ui::MainWindow *ui;
-    QLineEdit *ipLineEdit;
-    QLineEdit *portLineEdit;
-    QPushButton *connectButton;
-    VncViewer *viewer;
+
+    QVector<VncViewer*> viewers;
 
     int m_nCurrentConnectionRow = -1; // 当前连接的行索引，-1表示未连接
+
 };
 
 #endif // MAINWINDOW_H
